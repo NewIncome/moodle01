@@ -18,8 +18,8 @@ $CFG->dboptions = array (
   'dbcollation' => 'utf8mb4_unicode_ci',
 );
 
-$CFG->wwwroot   = 'http://localhost';
-$CFG->dataroot  = '/var/moodledata';
+$CFG->wwwroot   = 'http://localhost/moodle';
+$CFG->dataroot  = '/var/moodledata01';
 $CFG->admin     = 'admin';
 
 $CFG->directorypermissions = 0777;
