@@ -51,6 +51,9 @@ echo html_writer::start_div('', ['id' => 'userfilesform']);
 $form = new \core_user\form\private_files();
 $form->set_data_for_dynamic_submission();
 $form->display();
+
+echo 'INSIDE USER > FILES.php'; // *** ***
+
 echo html_writer::end_div();
 $PAGE->requires->js_call_amd('core_user/private_files', 'initDynamicForm',
     ['#userfilesform', \core_user\form\private_files::class]);

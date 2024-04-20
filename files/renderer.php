@@ -423,7 +423,7 @@ class core_files_renderer extends plugin_renderer_base {
         ];
         return $this->render_from_template('core/filemanager_uploadform', $context);
     }
-
+//***
     /**
      * FilePicker JS template to display during loading process (inside element with class 'fp-content').
      *

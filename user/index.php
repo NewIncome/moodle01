@@ -102,7 +102,13 @@ if ($node) {
 
 echo $OUTPUT->header();
 
+
+
+echo 'Start Test here';
 $participanttable = new \core_user\table\participants("user-index-participants-{$course->id}");
+echo 'End Test here';
+
+
 
 // Manage enrolments.
 $manager = new course_enrolment_manager($PAGE, $course);

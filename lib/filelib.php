@@ -294,6 +294,10 @@ function file_postupdate_standard_editor($data, $field, array $options, $context
  */
 function file_prepare_standard_filemanager($data, $field, array $options, $context=null, $component=null, $filearea=null, $itemid=null) {
     $options = (array)$options;
+    
+    /*echo 'INSIDE file_prepare_standard_filemanager. $OPTIONS';
+    echo '<pre>'; print_r($options); echo '</pre>';
+*/
     if (!isset($options['subdirs'])) {
         $options['subdirs'] = false;
     }

@@ -183,8 +183,29 @@ if (core_userfeedback::should_display_reminder()) {
 }
 
 echo $OUTPUT->addblockbutton('content');
+// Before blocks
+echo 'Test i n n n, before blocks';           // *** ***
+/*
+$maxbytes = get_max_upload_sizes();
+$mform->addElement(
+  'filemanager',
+  'test_attachments',
+  get_string('attachment', 'moodle'),
+  null,
+  [
+      'subdirs' => 0,
+      'maxbytes' => $maxbytes,
+      'areamaxbytes' => 10485760,
+      'maxfiles' => 5,
+      'accepted_types' => ['document'],
+      'return_types' => FILE_INTERNAL | FILE_EXTERNAL,
+  ]
+);
+*/
+
 
 echo $OUTPUT->custom_block_region('content');
+// After blocks
 
 echo $OUTPUT->footer();
 
