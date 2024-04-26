@@ -40,17 +40,46 @@ if ($cform->is_cancelled()) {
   if (isset($modifications)) {
     // *** *** Your CODE here to insert into DATABASE
     // Set DB records
-    foreach ($modifications as $file=>$checks) {
+    echo '<pre>'; print_r('IN if-isset($modifications)'); echo '</pre>';
+    /*(       [id] => 4
+            [component] => assignfeedback_editpdf
+            [filepath] => /
+            [filename] => tick.png
+            [userid] => 2
+            [mimetype] => image/png
+            [referencefileid] => 
+            [timecreated] => 1712803897   )*/
+    $uniqueattendance = new stdclass;                             //WORKS!!!!!!!
+    $uniqueattendance->id = 4;
+    $uniqueattendance->referencefileid = 101;
+    if ($DB->update_record('files', $uniqueattendance)) {
+        echo '<pre>'; print_r('Update SUCCESS!'); echo '</pre>';
+      } else {
+        echo '<pre>'; print_r('Update FAIL!!'); echo '</pre>';
+      }
+    /*if ($uniqueattendance = get_record('mytable', 'id', $anabsentee->number)) {
+      $uniqueattendance->field1 = 'new data';
+      update_record('mytable', $uniqueattendance);
+      if ($DB->update_record('mdl_file', $uniqueattendance)) {
+        echo '<pre>'; print_r('Update SUCCESS!'); echo '</pre>';
+      } else {
+        echo '<pre>'; print_r('Update FAIL!!'); echo '</pre>';
+      }
+    }*/
 
-      $rec_id = $DB->get_record_sql(field_verif_query($file));
-      if (empty($aclrecord)) {
-        /*$aclrecord = new stdClass();
+    /*foreach ($modifications as $file=>$checks) {
+
+      //$rec_id = $DB->get_record_sql(field_verif_query($file));
+      
+      /*if (empty($aclrecord)) {
+        $aclrecord = new stdClass();
         $aclrecord->mnet_host_id = $user->mnethostid;
         $aclrecord->username = $user->username;
         $aclrecord->accessctrl = $accessctrl;
-        $DB->update_record('mnet_sso_access_control', $aclrecord);*/
+        $DB->update_record('mnet_sso_access_control', $aclrecord);
         echo 'Error: Record info to update was empty.';
       } else {
+        
         /*  $uniqueattendance = new stdclass;
         $uniqueattendance->id = $anabsentee->number;
         $uniqueattendance->field1 = 'some data';
@@ -62,15 +91,16 @@ if ($cform->is_cancelled()) {
         }*/
         /*$DB->update_record('files', $aclrecord);
         echo 'Record info updated OK';
-        */
+        
 
         echo '<pre>'; print_r('UPDATED $aclrecord: '); echo '</pre>';
         echo '<pre>'; print_r($aclrecord); echo '</pre>';
       }
-    }
+    }*/
 
 
   } else {
+    echo '<pre>'; print_r('IN else-isset($modifications)'); echo '</pre>';
     echo 'No changes are needed';
   }
 
