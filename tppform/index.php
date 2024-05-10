@@ -1,11 +1,13 @@
 <?php
 //Include simplehtl_form.php
 require('../config.php'); //to have access to global variables like the following
-global $CFG, $DB, $USER, $OUTPUT;
+global $CFG, $DB, $USER, $OUTPUT, $PAGE;
 //require_once($CFG->dirroot.'/tppform/form.php');
 require($CFG->dirroot.'/tppform/checklist_form.php');
 require_once($CFG->dirroot.'/tppform/lib.php');
 //require_once($CFG->dirroot.'/test/_ppform.html');  // this automatically renders the whole html at the top
+
+$PAGE->requires->js('/tppform/js/main.js', true); // the value true is optional, and used to call this command in the header of the html
 
 echo $OUTPUT->header();
 
@@ -13,9 +15,14 @@ echo $OUTPUT->header();
 $docs = $DB->get_records_sql($query_user_files);
 //echo '<pre>'; print_r('Fix records: '); echo '</pre>';
 //echo '<pre>'; print_r(fix_records($docs)); echo '</pre>';
-echo 'The DOCs:';
-echo '<pre>'; print_r($docs); echo '</pre>';
+//echo 'The updated DOCs:';
+//echo '<pre>'; print_r($docs); echo '</pre>';
 
+$q1 = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = 'mdl_files'";
+echo '<pre>'; print_r('---Record Types---'); echo '</pre>';
+echo '<pre>'; print_r($DB->get_records_sql($q1)); echo '</pre>';
+
+$my_var1 = "hello";
 //echo '<pre>'; print_r('Start Test! '); echo '</pre>';
 //conv_cbox_params($test_cbox_params, $search_names);
 // CHECKLIST to be processed here
@@ -23,7 +30,7 @@ $cform = new checklist_html_form(null, [$search_names, $doc_names, fix_records($
 // Form processing and displaying is done here.
 if ($cform->is_cancelled()) {
 
-  echo 'You have clicked on checklist_html_form cancel button.';
+  echo 'You have clicked on checklist_html_form CANCEL button.';
 
 } else if ($fromform = $cform->get_data()) {
 
@@ -37,73 +44,55 @@ if ($cform->is_cancelled()) {
   $new_data = conv_cbox_params($fromform, $search_names);
   $modifications = check_for_modif($docs, $new_data);
 
-  if (isset($modifications)) {
+  if (isset($modifications) && !empty($modifications)) {
+    echo '<pre>'; print_r('Modifications: '); echo '</pre>';
+    echo '<pre>'; print_r($modifications); echo '</pre>';
     // *** *** Your CODE here to insert into DATABASE
     // Set DB records
     echo '<pre>'; print_r('IN if-isset($modifications)'); echo '</pre>';
-    /*(       [id] => 4
-            [component] => assignfeedback_editpdf
-            [filepath] => /
-            [filename] => tick.png
-            [userid] => 2
-            [mimetype] => image/png
-            [referencefileid] => 
-            [timecreated] => 1712803897   )*/
-    $uniqueattendance = new stdclass;                             //WORKS!!!!!!!
+    /*$uniqueattendance = new stdclass;                             //WORKS!!!!!!!
     $uniqueattendance->id = 4;
     $uniqueattendance->referencefileid = 101;
     if ($DB->update_record('files', $uniqueattendance)) {
         echo '<pre>'; print_r('Update SUCCESS!'); echo '</pre>';
       } else {
         echo '<pre>'; print_r('Update FAIL!!'); echo '</pre>';
-      }
-    /*if ($uniqueattendance = get_record('mytable', 'id', $anabsentee->number)) {
-      $uniqueattendance->field1 = 'new data';
-      update_record('mytable', $uniqueattendance);
-      if ($DB->update_record('mdl_file', $uniqueattendance)) {
-        echo '<pre>'; print_r('Update SUCCESS!'); echo '</pre>';
+      }*/
+
+    foreach ($modifications as $file) {
+      if (empty($file)) {
       } else {
-        echo '<pre>'; print_r('Update FAIL!!'); echo '</pre>';
-      }
-    }*/
-
-    /*foreach ($modifications as $file=>$checks) {
-
-      //$rec_id = $DB->get_record_sql(field_verif_query($file));
-      
-      /*if (empty($aclrecord)) {
-        $aclrecord = new stdClass();
-        $aclrecord->mnet_host_id = $user->mnethostid;
-        $aclrecord->username = $user->username;
-        $aclrecord->accessctrl = $accessctrl;
-        $DB->update_record('mnet_sso_access_control', $aclrecord);
-        echo 'Error: Record info to update was empty.';
-      } else {
-        
-        /*  $uniqueattendance = new stdclass;
-        $uniqueattendance->id = $anabsentee->number;
-        $uniqueattendance->field1 = 'some data';
-        $uniqueattendance->field2 = 'something else';
-        if (update_record('mytable', $uniqueattendance)) {
-        /// Success!
-        } else {
-        /// Fail!
-        }*/
-        /*$DB->update_record('files', $aclrecord);
-        echo 'Record info updated OK';
-        
-
-        echo '<pre>'; print_r('UPDATED $aclrecord: '); echo '</pre>';
+        $aclrecord = new stdclass;
+        $aclrecord->id = $file->id;
+        $aclrecord->referencefileid = sprintf('%03d', $file->referencefileid);
+        // sprintf('%03d', $value); is needed because the DB update col is a Int, so it converts the string
+        echo '<pre>'; print_r('Modif to DB: '); echo '</pre>';
         echo '<pre>'; print_r($aclrecord); echo '</pre>';
+        echo gettype($file->referencefileid) . "<br>";
+        if ($DB->update_record('files', $aclrecord)) {
+          echo `console.log('DB data Set, OK!')`;
+          echo '<pre>'; print_r('Update SUCCESS!!'); echo '</pre>';
+        } else {
+          echo `console.log('ERROR with DB data Set')`;
+          echo '<pre>'; print_r('Update FAIL!!'); echo '</pre>';
+        }
       }
-    }*/
-
-
+    }
+    f_alert('Update Success!');
+    echo '<script type="text/javascript">',
+     'mark_checks();',
+     '</script>'
+    ;
+    $cform->set_data($toform);
+    $cform->display();
+    echo '""The updated DOCs:';
+    echo '<pre>'; print_r($DB->get_records_sql($query_user_files)); echo '</pre>';
   } else {
-    echo '<pre>'; print_r('IN else-isset($modifications)'); echo '</pre>';
+    //echo '<pre>'; print_r('In ELSE-isset($modifications)'); echo '</pre>';
     echo 'No changes are needed';
+    f_alert('No changes are needed');
+    $cform->display();
   }
-
 } else {
   $cform->set_data($toform);
   // Display the form.

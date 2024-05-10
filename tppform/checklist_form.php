@@ -19,6 +19,7 @@ class checklist_html_form extends moodleform {
             return preg_match("/{$s_av[$i]}/i", $obj->filename);
           });
           $d = fix_records($d)[0];
+          $r = $d->referencefileid;
           //echo '<pre>'; print_r($d); echo '</pre>';
           //$d = act_docs($i);
 
@@ -26,9 +27,12 @@ class checklist_html_form extends moodleform {
           echo '<pre>'; print_r((array)$d); echo '</pre>';
           echo '<pre>'; print_r([$d->filename, $d->timecreated]); echo '</pre>';
           echo '<pre>'; print_r('NEEEEXT'); echo '</pre>';*/
-          $mform->addElement('advcheckbox', "$s_av[$i]_en", $req_name, 'Entregado', ['group' => $i], array(0,1));
-          $mform->addElement('advcheckbox', "$s_av[$i]_co", $d->filename ? $d->filename : '-', 'Cotejado', ['group' => $i], array(0,1));
-          $mform->addElement('advcheckbox', "$s_av[$i]_ce", get_date($d->timecreated), 'Certificado', ['group' => $i], array(0,1));
+          $mform->addElement('advcheckbox', "$s_av[$i]_en", $req_name, 'Entregado',
+                              ['group' => $i, 'data-mydat' => $r, 'data-mynam' => 'ent'], array(0,1));
+          $mform->addElement('advcheckbox', "$s_av[$i]_co", $d->filename ? $d->filename : '-', 'Cotejado',
+                              ['group' => $i, 'data-mydat' => $r, 'data-mynam' => 'cot'], array(0,1));
+          $mform->addElement('advcheckbox', "$s_av[$i]_ce", get_date($d->timecreated), 'Certificado',
+                              ['group' => $i, 'data-mydat' => $r, 'data-mynam' => 'cer'], array(0,1));
           $this->add_checkbox_controller($i);
         }
         //echo '<pre>'; print_r($docs); echo '</pre>';
@@ -41,7 +45,7 @@ class checklist_html_form extends moodleform {
         $this->add_action_buttons('submitlabel', 'Submit it');
     }
 
-    function my_fix_records($recs) {
+    /*function my_fix_records($recs) {
       $new_arr = [];
       foreach($recs as $key=>$val) { array_push($new_arr, $val); }
       return $new_arr;
@@ -51,6 +55,10 @@ class checklist_html_form extends moodleform {
       //echo '<pre>'; print_r($dt); echo '</pre>';
       return $dt ? gmdate("Y-m-d \TH:i:s\Z", $dt) : '';
     }
+
+    function put_dat($dt) {
+      
+    }*/
 
     // Custom validation should be added here.
     function validation($data, $files) {

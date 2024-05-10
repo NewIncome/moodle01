@@ -106,27 +106,18 @@ function check_for_modif($old, $new) {
   echo '<pre>'; print_r('OLD then NEW DATA'); echo '</pre>';
   echo '<pre>'; print_r($old); echo '</pre>';
   echo '<pre>'; print_r($new); echo '</pre>';
-  $modifs = (object)[];
+  $modifs = [];
   // We iterate over the old_arr because it's the record with the list of actual images, and the new is the checkbox_list
   foreach ($old as $doc) {
-    /*echo '<pre>'; print_r('$old[$doc]'); echo '</pre>';
-    echo '<pre>'; print_r($doc); echo '</pre>';
-    echo '<pre>'; print_r($doc->filename); echo '</pre>';
-    echo '<pre>'; print_r($new->{$doc->filename}); echo '</pre>';
-    echo '<pre>'; print_r(isset($doc->referencefileid)); echo '</pre>'; // false
-    echo '<pre>'; print_r(isset($doc->filename)); echo '</pre>';
-    echo '<pre>'; print_r($doc->referencefileid == ' '); echo '</pre>'; // false
-    echo '<pre>'; print_r($doc->referencefileid == 0); echo '</pre>';
-    echo '<pre>'; print_r($doc->referencefileid == ''); echo '</pre>';
-    */
-    /*
-    if ($doc->referencefileid != $new->{$doc->filename} || !isset($doc->referencefileid)) {
-      $modifs->{$doc->filename} = $new->{$doc->filename};
-    }*/
-
+    //if ($doc->referencefileid != $new->{$doc->filename} || !isset($doc->referencefileid)) {
+    if ((isset($doc->referencefileid) && !($doc->referencefileid === $new->{rem_ext($doc->filename)})) || (!isset($doc->referencefileid) && $new->{rem_ext($doc->filename)} != '000')) {
+      array_push($modifs, (object)['id'=>$doc->id, 'referencefileid'=>$new->{rem_ext($doc->filename)}]); 
+      //$modifs->{$doc->filename} = $new->{$doc->filename};
+    }
   }
-  echo '   Done!  Print $modifs: ';
-  echo '<pre>'; print_r($modifs); echo '</pre>';
+
+  //echo '   Done!  Print $modifs: ';
+  //echo '<pre>'; print_r($modifs); echo '</pre>';
   return $modifs;
 }
 
@@ -142,6 +133,10 @@ function fix_old_data($dts) {
 
 function rem_ext($word) {
   return substr($word, 0, strpos($word,'.')-strlen($word));
+}
+
+function f_alert($message) {
+  echo "<script>alert('$message');</script>";
 }
 
 /*
