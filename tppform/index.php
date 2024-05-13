@@ -13,20 +13,18 @@ echo $OUTPUT->header();
 
 // TO Query the DB for the DOCs
 $docs = $DB->get_records_sql($query_user_files);
+$reqdoc_checks = $DB->get_records_sql($query_req_doc_checks);
 //echo '<pre>'; print_r('Fix records: '); echo '</pre>';
 //echo '<pre>'; print_r(fix_records($docs)); echo '</pre>';
-//echo 'The updated DOCs:';
-//echo '<pre>'; print_r($docs); echo '</pre>';
+echo 'T h e   DOCs:';
+echo '<pre>'; print_r($docs); echo '</pre>';
+echo 'T h e   Checks:';
+echo '<pre>'; print_r($reqdoc_checks); echo '</pre>';
 
-$q1 = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = 'mdl_files'";
-echo '<pre>'; print_r('---Record Types---'); echo '</pre>';
-echo '<pre>'; print_r($DB->get_records_sql($q1)); echo '</pre>';
-
-$my_var1 = "hello";
 //echo '<pre>'; print_r('Start Test! '); echo '</pre>';
 //conv_cbox_params($test_cbox_params, $search_names);
 // CHECKLIST to be processed here
-$cform = new checklist_html_form(null, [$search_names, $doc_names, fix_records($docs)]);
+$cform = new checklist_html_form(null, [$search_names, $doc_names, fix_records($docs), $reqdoc_checks]);
 // Form processing and displaying is done here.
 if ($cform->is_cancelled()) {
 
@@ -34,22 +32,22 @@ if ($cform->is_cancelled()) {
 
 } else if ($fromform = $cform->get_data()) {
 
-  echo '<pre>'; print_r('Inside sent Params from C_Form: '); echo '</pre>';
-  echo $fromfrom;
+  //echo '<pre>'; print_r('Inside sent Params from C_Form: '); echo '</pre>';
+  //echo $fromfrom;
   /*echo $fromfrom;
   echo '<pre>'; print_r($fromform); echo '</pre>';
   */
   //$old_data = fix_old_data($DB->get_records_sql($old_data_query));
   //$old_data = $DB->get_records_sql($old_data_query);
   $new_data = conv_cbox_params($fromform, $search_names);
-  $modifications = check_for_modif($docs, $new_data);
+  $modifications = check_for_modif($docs, $reqdoc_checks, $new_data);
 
   if (isset($modifications) && !empty($modifications)) {
     echo '<pre>'; print_r('Modifications: '); echo '</pre>';
     echo '<pre>'; print_r($modifications); echo '</pre>';
     // *** *** Your CODE here to insert into DATABASE
     // Set DB records
-    echo '<pre>'; print_r('IN if-isset($modifications)'); echo '</pre>';
+    //echo '<pre>'; print_r('IN if-isset($modifications)'); echo '</pre>';
     /*$uniqueattendance = new stdclass;                             //WORKS!!!!!!!
     $uniqueattendance->id = 4;
     $uniqueattendance->referencefileid = 101;
@@ -63,13 +61,15 @@ if ($cform->is_cancelled()) {
       if (empty($file)) {
       } else {
         $aclrecord = new stdclass;
-        $aclrecord->id = $file->id;
-        $aclrecord->referencefileid = sprintf('%03d', $file->referencefileid);
+        $aclrecord->id = $file->file_id;
+        $aclrecord->doc_verify_checks = $file->doc_verify_checks;
         // sprintf('%03d', $value); is needed because the DB update col is a Int, so it converts the string
-        echo '<pre>'; print_r('Modif to DB: '); echo '</pre>';
+        /*echo '<pre>'; print_r('Modif to DB: '); echo '</pre>';
         echo '<pre>'; print_r($aclrecord); echo '</pre>';
-        echo gettype($file->referencefileid) . "<br>";
-        if ($DB->update_record('files', $aclrecord)) {
+        
+        echo gettype($file->referencefileid) . "<br>";*/
+        
+        if ($DB->update_record('student_reqs', $aclrecord)) {
           echo `console.log('DB data Set, OK!')`;
           echo '<pre>'; print_r('Update SUCCESS!!'); echo '</pre>';
         } else {
@@ -81,12 +81,12 @@ if ($cform->is_cancelled()) {
     f_alert('Update Success!');
     echo '<script type="text/javascript">',
      'mark_checks();',
-     '</script>'
-    ;
+     '</script>';
+
     $cform->set_data($toform);
     $cform->display();
-    echo '""The updated DOCs:';
-    echo '<pre>'; print_r($DB->get_records_sql($query_user_files)); echo '</pre>';
+    echo "The updated DOC Check's:";
+    echo '<pre>'; print_r($DB->get_records_sql($query_req_doc_checks)); echo '</pre>';
   } else {
     //echo '<pre>'; print_r('In ELSE-isset($modifications)'); echo '</pre>';
     echo 'No changes are needed';

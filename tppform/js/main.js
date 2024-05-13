@@ -1,6 +1,5 @@
-console.log('Hi dev-human!');
-
 const mark_checks = async () => {
+  console.log('Hi dev-human!');
   let all_checkboxes = document.getElementsByClassName('form-check-input');
   /*console.log('All checkboxes:');
   console.log(all_checkboxes);
@@ -13,7 +12,7 @@ const mark_checks = async () => {
   all_checkboxes.forEach(e => {
     //console.log('Human Inside FOREACH');
     let checks = e.dataset.mydat;
-    if(checks) {      
+    if(checks) {
       let cs_ar = checks.split('');
       switch(e.dataset.mynam) {
         case 'ent':
@@ -30,7 +29,7 @@ const mark_checks = async () => {
   });
 }
 
-window.onreadystatechange = () => {
+window.onload = () => {
 //document.addEventListener('readystatechange', function () {   // TO TRY !!!!
   mark_checks();
 //});
