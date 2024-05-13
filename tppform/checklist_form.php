@@ -26,13 +26,6 @@ class checklist_html_form extends moodleform {
             Loop to check if the 
           */
           $cks = array_filter($doc_checks, function($dc) use($docs, $i, $s_av) {
-            //echo '<pre>'; print_r('----- $ d o c _ c h e c k -----'); echo '</pre>';
-            /*echo '<pre>'; print_r($dc); echo '</pre>';
-            echo '<pre>'; print_r(['i', $i, $docs[$i]->filename, $docs[$i]->id, $dc->file_id, $docs[$i]->id == $dc->file_id ? 'true' : 'false']); echo '</pre>';
-            echo '<pre>'; print_r([$docs[$dc->file_id]->filename, $req_name]); echo '</pre>';*/
-            //return $docs[$dc->file_id]->filename == $s_av[$i];
-            //with name get file-id, with id filter over student_docs regs
-            //echo '<pre>'; print_r([$i, $s_av[$i]]); echo '</pre>';
             $g_id = get_id_by_name($s_av[$i], $docs);
             /*echo '<pre>'; print_r('Got ID ?'); echo '</pre>';
             echo '<pre>'; print_r($g_id); echo '</pre>';*/
@@ -57,8 +50,6 @@ class checklist_html_form extends moodleform {
             $cks = '';
           }
 
-          //$d = act_docs($i);
-
           /*echo '<pre>'; print_r(get_object_vars($d)); echo '</pre>';
           echo '<pre>'; print_r((array)$d); echo '</pre>';
           echo '<pre>'; print_r([$d->filename, $d->timecreated]); echo '</pre>';
@@ -80,21 +71,6 @@ class checklist_html_form extends moodleform {
         //To add submit action buttons
         $this->add_action_buttons('submitlabel', 'Submit it');
     }
-
-    /*function my_fix_records($recs) {
-      $new_arr = [];
-      foreach($recs as $key=>$val) { array_push($new_arr, $val); }
-      return $new_arr;
-    }
-
-    function my_get_date($dt) {
-      //echo '<pre>'; print_r($dt); echo '</pre>';
-      return $dt ? gmdate("Y-m-d \TH:i:s\Z", $dt) : '';
-    }
-
-    function put_dat($dt) {
-      
-    }*/
 
     // Custom validation should be added here.
     function validation($data, $files) {

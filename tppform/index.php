@@ -45,29 +45,42 @@ if ($cform->is_cancelled()) {
   if (isset($modifications) && !empty($modifications)) {
     echo '<pre>'; print_r('Modifications: '); echo '</pre>';
     echo '<pre>'; print_r($modifications); echo '</pre>';
-    // *** *** Your CODE here to insert into DATABASE
-    // Set DB records
-    //echo '<pre>'; print_r('IN if-isset($modifications)'); echo '</pre>';
-    /*$uniqueattendance = new stdclass;                             //WORKS!!!!!!!
-    $uniqueattendance->id = 4;
-    $uniqueattendance->referencefileid = 101;
-    if ($DB->update_record('files', $uniqueattendance)) {
-        echo '<pre>'; print_r('Update SUCCESS!'); echo '</pre>';
-      } else {
-        echo '<pre>'; print_r('Update FAIL!!'); echo '</pre>';
-      }*/
-
-    foreach ($modifications as $file) {
+    echo '<pre>'; print_r($USER->id); echo '</pre>';
+ 
+    // sprintf('%03d', $value); is needed because the DB update col is a Int, so it converts the string
+    /*echo '<pre>'; print_r('Modif to DB: '); echo '</pre>';
+    echo '<pre>'; print_r($aclrecord); echo '</pre>';
+    echo gettype($file->referencefileid) . "<br>";*/
+    foreach ($modifications->new_regs as $file) {
       if (empty($file)) {
       } else {
         $aclrecord = new stdclass;
-        $aclrecord->id = $file->file_id;
+        $aclrecord->user_id = $USER->id;   // This is a string, it might need to be converted to an int, bigint or some other later
+        $aclrecord->file_id = $file->file_id;
         $aclrecord->doc_verify_checks = $file->doc_verify_checks;
-        // sprintf('%03d', $value); is needed because the DB update col is a Int, so it converts the string
-        /*echo '<pre>'; print_r('Modif to DB: '); echo '</pre>';
+
+        /*echo '<pre>'; print_r('----- INSIDE New Regs ------'); echo '</pre>';
         echo '<pre>'; print_r($aclrecord); echo '</pre>';
-        
-        echo gettype($file->referencefileid) . "<br>";*/
+        echo '<pre>'; print_r(gettype($USER->id)); echo '</pre>';*/
+
+        if ($DB->insert_record('student_reqs', $aclrecord)) {
+          echo `console.log('DB data Set, OK!')`;
+          echo '<pre>'; print_r('Update SUCCESS!!'); echo '</pre>';
+        } else {
+          echo `console.log('ERROR with DB data Set')`;
+          echo '<pre>'; print_r('Update FAIL!!'); echo '</pre>';
+        }
+      }
+    }
+    foreach ($modifications->updates as $file) {
+      if (empty($file)) {
+      } else {
+        $aclrecord = new stdclass;
+        $aclrecord->id = $file->checks_id;
+        $aclrecord->doc_verify_checks = $file->doc_verify_checks;
+
+        echo '<pre>'; print_r('----- INSIDE Update Regs ------'); echo '</pre>';
+        echo '<pre>'; print_r($aclrecord); echo '</pre>';
         
         if ($DB->update_record('student_reqs', $aclrecord)) {
           echo `console.log('DB data Set, OK!')`;
@@ -78,6 +91,7 @@ if ($cform->is_cancelled()) {
         }
       }
     }
+
     f_alert('Update Success!');
     echo '<script type="text/javascript">',
      'mark_checks();',
