@@ -29,11 +29,18 @@ const mark_checks = async () => {
   });
 }
 
-window.onload = () => {
+//window.onload = () => {
+window.addEventListener('load', () => {
 //document.addEventListener('readystatechange', function () {   // TO TRY !!!!
   mark_checks();
 //});
-}
+});
+window.addEventListener('unload', () => {
+  mark_checks();
+});
+window.addEventListener('DOMContentLoaded', () => {
+  mark_checks();
+});
 //$(html_query_str).checked = 'checked';
 // maybe //$('.myCheckbox').removeAttr('checked')
 //name_en/co/ce
