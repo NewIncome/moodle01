@@ -36,6 +36,9 @@ class private_files extends \core_form\dynamic_form {
         $mform = $this->_form;
         $options = $this->get_options();
 
+        /*echo 'INSIDE private_files > definition. $OPTIONS"';
+        echo '<pre>'; print_r($options); echo '</pre>';
+*/
         // Show file area space usage.
         $maxareabytes = $options['areamaxbytes'];
         if ($maxareabytes != FILE_AREA_MAX_BYTES_UNLIMITED) {
@@ -171,8 +174,12 @@ class private_files extends \core_form\dynamic_form {
      */
     public function set_data_for_dynamic_submission(): void {
         $data = new \stdClass();
+        //echo 'INSIDE set_data_for_dynamic_submission'; // *** ***
+
         file_prepare_standard_filemanager($data, 'files', $this->get_options(),
-            $this->get_context_for_dynamic_submission(), 'user', 'private', 0);
+            $this->get_context_for_dynamic_submission(), 'user', 'private', 0); // *** *** Only get's the current User Id here:123
+        /*echo 'AFTER file_prepare_standard_filemanager CALL. $DATA';
+        echo '<pre>'; print_r($data); echo '</pre>';*/
         $this->set_data($data);
     }
 

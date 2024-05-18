@@ -1,0 +1,227 @@
+<div class="container">
+  <h2>Insctripciones 2024</h2>
+  <form action="#" method="POST"> <!-- Replace "#" with your form submission endpoint -->
+
+      <!-- Personal Information -->
+      <!--fieldset>
+          <legend>Información Personal</legend>
+          <div class="form-group">
+              <label for="appprogram">Programa al que desea aplicar:</label>
+              <select id="appprogram" name="appprogram" required>
+                  <option value=""disabled selected hidden>Seleccione un pragrama</option>
+                  <option value="espeAL">Especialidad Alcaldias</option>
+                  <option value="espeSA">Especialidad Secretarios de Acuerdos</option>
+                  <option value="maesJM">Maestria en Juicio de Amparo</option>
+                  <option value="maetsJA">Maestria en Justicia Administrativa</option>
+                  <option value="maetsSA">Maestria en Sistema Anticorrupcion</option>
+                  <option value="maetsDH">Maestria en Derechos Humanos</option>
+                  <option value="doctDC">Doctorado en Derecho Constitucional</option>
+              </select>
+          </div>
+          <div class="form-group">
+              <label for="names">Nombre(s):</label>
+              <input type="text" id="names" name="names" required>
+          </div>
+          <div class="form-group">
+              <label for="surname1">Primer apellido:</label>
+              <input type="text" id="surname1" name="surname1" required>
+          </div>
+          <div class="form-group">
+              <label for="surname2">Segundo apellido:</label>
+              <input type="text" id="surname2" name="surname2" required>
+          </div>
+          <div class="form-group">
+              <label for="mstatus">Estado civil:</label>
+              <select id="mstatus" name="mstatus" required>
+                  <option value=""disabled selected hidden>Elija su estado civil</option>
+                  <option value="single">Soltero</option>
+                  <option value="married">Casado</option>
+                  <option value="other">Otro</option>
+              </select>
+          </div>
+          <div class="form-group">
+              <label for="genre">Genero:</label>
+              <select id="genre" name="genre" required>
+                  <option value=""disabled selected hidden>Elija su género</option>
+                  <option value="male">Maculino</option>
+                  <option value="female">Femenino</option>
+                  <option value="other">Otro</option>
+              </select>
+          </div>
+          <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+              <label for="birthday">Fecha de Nacimiento:</label>
+              <input type="date" id="birthday" name="birthday" 	 required>
+          </div>
+          <div class="form-group">
+              <label for="phone">Telefono celular:</label>
+              <input type="tel" id="phone" name="phone" required>
+          </div>
+          <div class="form-group">
+              <label for="curp">CURP:</label>
+              <input type="text" id="curp" name="curp" required>
+          </div>
+          <div class="form-group">
+              <label for="rfc">RFC:</label>
+              <input type="text" id="rfc" name="rfc" required>
+          </div>
+          <div class="form-group">
+              <label for="nationality">Nacionalidad:</label>
+              <input type="text" id="nationality" name="nationality" required>
+          </div>
+      </fieldset>
+      
+      <!-- Academic Information -->
+      <!--fieldset>
+          <legend>Información Academica</legend>
+          <div class="form-group">
+              <label for="degree">Último Grado Académico:</label>
+              <select id="degree" name="degree" required>
+                  <option value=""disabled selected hidden>Último Grado Académico</option>
+                  <option value="Lic">Licenciatura</option>
+                  <option value="Mae">Maestria</option>
+                  <option value="Doc">Doctorado</option>
+              </select>
+          </div>
+          <div class="form-group">
+              <label for="institution">Institución Ecucativa:</label>
+              <input type="text" id="institution" name="institution" required>
+          </div>
+          <div class="form-group">
+              <label for="entidadinstitusion">Entidad Federativa de la Institución:</label>
+              <input type="text" id="entidadinstitusion" name="entidadinstitusion" required>
+          </div>
+          <div class="form-group">
+              <label for="average">Promedio último grado académico:</label>
+              <input type="number" id="average" name="average" step=".1" min="0" max="10" value="0" required>
+          </div>
+          <div class="form-group">
+              <label for="year">Año de Terminación:</label>
+              <input type="number" id="year" name="year" step="1" min="1900" max="2024" value="2024" required>
+          </div>
+      </fieldset>
+
+      
+      <!-- Professional Information -->
+      <!--fieldset>
+          <legend>Información Profesional:</legend>
+          <div class="form-group">
+              <label for="dependency">Dependencia a la que pertenece: </label>
+              <select id="dependency" name="dependency" required>
+                  <option value=""disabled selected hidden>Dependencia</option>
+                  <option value="TJA">TJACDMX</option>
+                  <option value="Oth">Otra</option>
+                  <option value="Non">Ninguna</option>
+              </select>
+          </div>
+          <div class="form-group">
+              <label for="dependencyname">Otra dependencia:</label>
+              <input type="text" id="dependencyname" name="dependencyname" required>
+          </div>
+          <div class="form-group">
+              <label for="entidaddependencia">Entidad federativa de la dependencia:</label>
+              <input type="text" id="entidaddependencia" name="entidaddependencia" required>
+          </div>
+          <div class="form-group">
+              <label for="adminarea">Unidad Administrativa:</label>
+              <input type="text" id="adminarea" name="adminarea" required>
+          </div>
+          <div class="form-group">
+              <label for="jobrole">Cargo:</label>
+              <input type="text" id="jobrole" name="jobrole" required>
+          </div>
+          <div class="form-group">
+              <label for="workphone">Telefono de oficina:</label>
+              <input type="tel" id="workphone" name="workphone" required>
+              <label for="extension">Extensión:</label>
+              <input type="number" id="extension" name="extension" step="1" min="0" max="999999" required>
+          </div>
+      </fieldset>
+
+
+      <!-- Professional Information -->
+      <fieldset>
+        <legend>Document Upload</legend>
+        <table>
+          <tr>
+            <th>Documento</th>
+            <th>Nombre</th>
+            <th>Entregado</th>
+            <th>Cotejado</th>
+            <th>Certificado</th>
+            <th>Fecha</th>
+          </tr>
+          <tr>
+            <div class="form-group">
+              <td><label for="actafile">Acta de nacimiento:</label></td>
+              <td>{file_name}</td>
+              <td><input type="checkbox" id="actafile_ent" name="actafile" value="entregado"></td>
+              <td><input type="checkbox" id="actafile_cot" name="actafile" value="cotejado"></td>
+              <td><input type="checkbox" id="actafile_cer" name="actafile" value="certificado"></td>
+              <td>{file_created}</td>
+              <!-- <td><input type="file" id="actafile" name="actafile" accept=".pdf" required></td> -->
+            </div>
+          </tr>
+          <!-- <tr>
+            <div class="form-group">
+              <label for="inefile">INE:</label>
+              <input type="file" id="inefile" name="inefile" accept=".pdf" required>
+            </div>
+          </tr>
+          <tr>
+            <div class="form-group">
+              <label for="curpfile">CURP:</label>
+              <input type="file" id="curpfile" name="curpfile" accept=".pdf" required>
+            </div>
+          </tr>
+          <tr>
+            <div class="form-group">
+              <label for="titulofile">Titulo:</label>
+              <input type="file" id="titulofile" name="titulofile" accept=".pdf" required>
+            </div>
+          </tr>
+          <tr>
+            <div class="form-group">
+              <label for="promediofile" title="Documento que muestre el promedio obtenido en el ultimo grado academico">Acreditacion de promedio:</label>
+              <input type="file" id="promediofile" name="promediofile" accept=".pdf" title="Documento que muestre el promedio obtenido en el ultimo grado academico" required>
+            </div>
+          </tr>
+          <tr>
+            <div class="form-group">
+              <label for="cvfile">Sintesis Curricular:</label>
+              <input type="file" id="cvfile" name="cvfile" accept=".pdf" required>
+            </div>
+          </tr>
+          <tr>
+            <div class="form-group">
+              <label for="idiomafile">Acreditacion de idioma:</label>
+              <input type="file" id="idiomafile" name="idiomafile" accept=".pdf" required>
+            </div>
+          </tr>
+          <tr>
+            <div class="form-group">
+              <label for="compromisofile">Carta compromiso:</label>
+              <input type="file" id="compromisofile" name="compromisofile" accept=".pdf" required>
+            </div>
+          </tr>
+          <tr>
+            <div class="form-group">
+              <label for="motivosfile">Acta de nacimiento:</label>
+              <input type="file" id="motivosfile" name="motivosfile" accept=".pdf" required>
+            </div>
+          </tr>
+          <tr>
+            <div class="form-group">
+              <label for="resume">Acta de nacimiento:</label>
+              <input type="file" id="acta" name="acta" accept=".pdf" required>
+            </div>
+          </tr> -->
+        </table>
+      </fieldset>
+    
+    <button type="submit">Submit Application</button>
+  </form>
+</div>

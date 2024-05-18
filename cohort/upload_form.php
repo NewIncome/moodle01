@@ -65,6 +65,7 @@ class cohort_upload_form extends moodleform {
             $mform->setDefault('delimiter', 'comma');
         }
         $mform->addHelpButton('delimiter', 'csvdelimiter', 'tool_uploadcourse');
+        echo 'TEST i n n n !!!';
 
         $choices = core_text::get_encodings();
         $mform->addElement('select', 'encoding', get_string('encoding', 'tool_uploadcourse'), $choices);
