@@ -62,17 +62,14 @@ function field_verif_query($f_name) {
 }
 
 function fix_records($recs) {
-  //echo 'INSIDE fix_records';
   $new_arr = [];
   foreach($recs as $key=>$val) {
-    //echo '<pre>'; print_r([$i, $val]); echo '</pre>';
     array_push($new_arr, $val);
   }
   return $new_arr;
 }
 
 function get_date($dt) {
-  //echo '<pre>'; print_r($dt); echo '</pre>';
   return $dt ? gmdate("Y-m-d", $dt) : '';
 }
 
@@ -107,8 +104,6 @@ stdClass Object
 */
 function conv_cbox_params($obj, $names) {
   $vars_arr = (object)[];
-  //echo '<pre>'; print_r('obj1'); echo '</pre>';
-  //echo '<pre>'; print_r($obj); echo '</pre>';
   foreach ($names as $name) {
     foreach (['_en', '_co', '_ce'] as $sfx) {
       $key = "$name$sfx";
@@ -155,9 +150,6 @@ Array
 )
 */
 function check_for_modif($old, $old_checks, $new) {
-  /*echo '<pre>'; print_r('OLD then NEW DATA'); echo '</pre>';
-  echo '<pre>'; print_r($old); echo '</pre>';
-  echo '<pre>'; print_r($new); echo '</pre>';*/
   $modifs = (object)['new_regs'=>[], 'updates'=>[]];
   // We iterate over the old_arr because it's the record with the list of actual images, and the new is the checkbox_list
   foreach ($old as $db_doc) {
@@ -167,18 +159,9 @@ function check_for_modif($old, $old_checks, $new) {
       If there isn't and there is a change for it in $new, add it to $modifs->new_regs
       If there is, and the data from the 'student_reqs table'->doc_verify_checks is different than new, add it to $modifs->update
     */
-    /*echo '<pre>'; print_r('Check for existance'); echo '</pre>';
-    echo '<pre>'; print_r($db_doc->id); echo '</pre>';
-    echo '<pre>'; print_r($old_checks[$db_doc->id]); echo '</pre>';
-    echo '<pre>'; print_r(isset($old_checks[$db_doc->id]) ? 'true' : 'false'); echo '</pre>';
-    echo '<pre>'; print_r([$old_checks[$db_doc->id]->doc_verify_checks, $new->{rem_ext($db_doc->filename)}]); echo '</pre>';*/
 
     $file_checks_reg = get_elems_by('file_id', $db_doc->id, $old_checks);
     if(empty($file_checks_reg)) {
-      /*echo '<pre>'; print_r('----- INSIDE "IF" File checks register is empty ------'); echo '</pre>';
-      echo '<pre>'; print_r($file_checks_reg); echo '</pre>';
-      echo '<pre>'; print_r($db_doc->filename); echo '</pre>';
-      echo '<pre>'; print_r(isset($new->{rem_ext($db_doc->filename)}) ? 'true' : 'false'); echo '</pre>';*/
       if(isset($new->{rem_ext($db_doc->filename)})) {
         array_push($modifs->new_regs, (object)['file_id'=>$db_doc->id, 'doc_verify_checks'=>$new->{rem_ext($db_doc->filename)}]);
       }
@@ -190,25 +173,18 @@ function check_for_modif($old, $old_checks, $new) {
 
     /*if ((!isset($old_checks[$db_doc->id]) && $new->{rem_ext($db_doc->filename)})
         || (isset($old_checks[$db_doc->id]) && $old_checks[$db_doc->id]->doc_verify_checks != $new->{rem_ext($db_doc->filename)})) {
-      echo '<pre>'; print_r('INSIDE "IF"'); echo '</pre>';
-      echo '<pre>'; print_r('[rem_ext($db_doc->filename), $new->{rem_ext($db_doc->filename)}]'); echo '</pre>';
-      echo '<pre>'; print_r([rem_ext($db_doc->filename), $new->{rem_ext($db_doc->filename)}]); echo '</pre>';
       array_push($modifs, (object)['file_id'=>$db_doc->id, 'doc_verify_checks'=>$new->{rem_ext($db_doc->filename)}]); 
     }*/
   }
 
-  //echo '   Done!  Print $modifs: ';
-  //echo '<pre>'; print_r($modifs); echo '</pre>';
   return $modifs;
 }
 
 function fix_old_data($dts) {
-  //echo '<pre>'; print_r('INSIDE fix_old_data'); echo '</pre>';
   $data = fix_records($dts);
   foreach ($data as $dt) {
     $dt->filename = rem_ext($dt->filename);
   }
-  //echo '<pre>'; print_r(fix_records($data)); echo '</pre>';
   return $data;
 }
 
@@ -221,15 +197,9 @@ function f_alert($message) {
 }
 
 function get_id_by_name($nm, $dcs) {
-  //echo '<pre>'; print_r('INSIDE get_id_by_name'); echo '</pre>';
-  //echo '<pre>'; print_r($nm); echo '</pre>';
   $tvar = array_filter($dcs, function($dc) use($nm) {
-    //echo '<pre>'; print_r([$nm, $dc->filename]); echo '</pre>';
     return $nm == rem_ext($dc->filename);
   });
-  /*echo '<pre>'; print_r('--- T V A R ---'); echo '</pre>';
-  echo '<pre>'; print_r($tvar); echo '</pre>';
-  echo '<pre>'; print_r(reset($tvar)->id); echo '</pre>';*/
   return empty($tvar) ? false : reset($tvar)->id;
 }
 
