@@ -95,4 +95,8 @@ class block_doc_checklist extends block_base {
         return array(
         );
     }
+
+    function _self_test() {
+      return true;
+    }
 }
