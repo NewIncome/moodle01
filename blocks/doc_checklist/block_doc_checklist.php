@@ -93,6 +93,7 @@ class block_doc_checklist extends block_base {
      */
     public function applicable_formats() {
         return array(
+          'all' => true
         );
     }
 
